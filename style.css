@@ -1,1 +1,14 @@
-test test test
+#forecast-cards{
+    
+}
+.forecast{
+    width: 18%;
+    margin: 5px; 
+}
+#forecast-weather{
+    width: 100%;
+}
+#current-weather{
+  margin: 10px;  
+}
+
