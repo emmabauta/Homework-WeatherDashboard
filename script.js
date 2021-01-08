@@ -8,32 +8,59 @@ console.log(searchValue);
 $("#search-value").val("")
 
 searchWeather(searchValue)
-searchForecast(searchValue)
 })
+//createCityList(localStorage.getItem("citySearch"))
+
+//City search list      
+function createCityList(citySearchList){
+    $("#city-list").empty();
+    var keys = Object.keys(citySearchList);
+    for (var i = 0; i < keys.length; i++){
+        var cityListEntry = $("<button>");
+        cityListEntry.addClass("list-group-item list-group-item-action");
+        $("#city-list").append(cityListEntry);
+    }
+}
 // Ajax call to pull weather data for current day 
 function searchWeather(searchValue){
+
     $.ajax({
         method: "GET",
-        url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=" + APIkey + "&units=imperial",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=" + APIkey + "&units=imperial",
         dataType: "json",
         success: function(data){
             console.log(data);
-            $("#current-weather").append(data.name);
+            $("#current-weather").append("<h2>" + data.city.name + "</h2>");
+            
+            var latitude;
+            var longitude;
+        latitude = data.city.coord.lat;
+        longitude = data.city.coord.lon;
+       
+        $.ajax({
+            url:"https://api.openweathermap.org/data/2.5/onecall?" + "&units=imperial" + "&appid=" + APIkey +
+            "&lat=" + latitude + "&lon=" + longitude, 
+            method:"GET", 
+            success: function(data){
+                console.log(data);
+                $("#current-weather").append("<p>" + "Temperature: " + data.current.temp + "</p>");
+                $("#current-weather").append("<p>" + "Humidity: " + data.current.humidity + "</p>");
+                $("#current-weather").append("<p>" + "UV Index: " + data.current.uvi + "</p>");
+            }
+        
+        })
+
+
+
         }
     })
 }
-// Ajax call to pull weather for 5 day forecast 
-function searchForecast(searchValue){
-    $.ajax({
-        method:"GET",
-        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=" + APIkey + "&units=imperial",
-        dataType: "json", 
-        success: function(data){
-            console.log(data);
-            $("#forecast-weather").append(JSON.stringify(data));
-        }
-    })
-}
+
+
+//Ajax call for longitude and latitude for 5 day forecast call 
+
+
+
 
 
 
