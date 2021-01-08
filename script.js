@@ -57,7 +57,7 @@ function searchWeather(searchValue){
 
                 //for loop for 5 day forecast
                 for (var i = 0; i < 6; i++){
-                    $("#forecast" + i).append(nowMoment + "<p>" + "Temperature: " + data.daily[i]['temp'] + "</p>", "<p>" + "Humidity: " + data.daily.humidity + "</p>")
+                    $("#forecast" + i).append(nowMoment.format("M/D/YYYY") + "<p>" + "Temperature: " + data.daily[i].temp.day + "</p>", "<p>" + "Humidity: " + data.daily[i].humidity + "</p>")
 
                 }
             }
