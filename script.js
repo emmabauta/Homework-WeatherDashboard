@@ -9,7 +9,15 @@ $("#search-value").val("")
 
 searchWeather(searchValue)
 })
-//createCityList(localStorage.getItem("citySearch"))
+//Date Moment.JS 
+
+var nowMoment = moment();
+
+var displayMoment = $("<h3>");
+$("#city-name").empty();
+$("#city-name").append(
+  displayMoment.text("(" + nowMoment.format("M/D/YYYY") + ")")
+);
 
 //City search list      
 function createCityList(citySearchList){
@@ -46,6 +54,12 @@ function searchWeather(searchValue){
                 $("#current-weather").append("<p>" + "Temperature: " + data.current.temp + "</p>");
                 $("#current-weather").append("<p>" + "Humidity: " + data.current.humidity + "</p>");
                 $("#current-weather").append("<p>" + "UV Index: " + data.current.uvi + "</p>");
+
+                //for loop for 5 day forecast
+                for (var i = 1; i < 5; i++){
+                    $("#forecast" + i).append(displayMoment + "<p>" + "Temperature: " + data.current.temp + "</p>", "<p>" + "Humidity: " + data.current.temp + "</p>")
+
+                }
             }
         
         })
@@ -55,22 +69,5 @@ function searchWeather(searchValue){
         }
     })
 }
-
-
-//Ajax call for longitude and latitude for 5 day forecast call 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 })
